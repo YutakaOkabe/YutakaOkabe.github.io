@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.jsでできること</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container" id="app">
+        <div class="text-left">
+            <div>
+                <h2 class="text-center my-4">ディレクティブまとめ</h2>
+                <div class="mb-5">
+                    <h3>v-bind</h3>
+                    <p>タグの属性に値を代入する<br>「:」に省略できる</p>
+                    <button type="button" v-bind:class="btn_class">Vueインスタンスからbtnクラスを代入</button>
+                </div>
+                <div class="mb-5">
+                    <h3>v-on</h3>
+                    <p>クリック動作を検知する</p>
+                    <button type="button" v-on:click="time" v-bind:class="btn_class">現在時刻を表示</button>
+                    <p>{{ now }}</p>
+                </div>
+                <div class="mb-5">
+                    <h3>v-if</h3>
+                    <p>タグの中で条件を入れて分岐させる</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radios" id="Radio1" v-on:click="radioTrue">
+                        <label class="form-check-label" for="Radio1">True</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radios" id="Radio2" v-on:click="radioFalse">
+                        <label class="form-check-label" for="Radio2">False</label>
+                    </div>
+                    <p v-if="radio">Trueがわたってきたので表示</p>
+                </div>
+                <div class="mb-5">
+                    <h3>v-for</h3>
+                    <p>タグの中でforループを回す</p>
+                    <ul>
+                        <li v-for="pref in prefs">{{ pref.name }}</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                btn_class: "btn btn-primary",
+                now: "00:00:00",
+                radio: null,
+                prefs: [
+                    { name: 'Fukuoka' },
+                    { name: 'Saga' },
+                    { name: 'Nagasaki' },
+                    { name: 'Oita' },
+                    { name: 'Kumamoto' },
+                    { name: 'Miyazaki' },
+                    { name: 'Kagoshima' }
+                ]
+            },
+            methods: {
+                time: function (e) {
+                    var date = new Date();
+                    this.now = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                },
+                radioTrue: function (e) {
+                    this.radio = true
+                },
+                radioFalse: function (e) {
+                    this.radio = false
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>
