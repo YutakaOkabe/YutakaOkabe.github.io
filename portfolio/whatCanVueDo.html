@@ -12,9 +12,10 @@
 
 <body>
     <div class="container" id="app">
+        <h2 class="text-center my-4">Vue.jsでできること</h2>
         <div class="text-left">
+            <h3 class="text-primary my-4">ディレクティブまとめ</h3>
             <div>
-                <h2 class="text-center my-4">ディレクティブまとめ</h2>
                 <div class="mb-5">
                     <h3>v-bind</h3>
                     <p>タグの属性に値を代入する<br>「:」に省略できる</p>
@@ -22,7 +23,7 @@
                 </div>
                 <div class="mb-5">
                     <h3>v-on</h3>
-                    <p>クリック動作を検知する</p>
+                    <p>クリック動作を検知する<br>「@」に省略できる</p>
                     <button type="button" v-on:click="time" v-bind:class="btn_class">現在時刻を表示</button>
                     <p>{{ now }}</p>
                 </div>
@@ -46,16 +47,39 @@
                         <li v-for="pref in prefs">{{ pref.name }}</li>
                     </ul>
                 </div>
-
+                <div class="mb-5">
+                    <h3>v-model</h3>
+                    <p>inputの内容を別の場所で使えるようにする</p>
+                    <input v-model="text1" type="text" class="form-control" placeholder="ここに入力したテキストが下に表示される">
+                    <p>{{ text1 }}</p>
+                </div>
+            </div>
+            <h3 class="text-primary my-4">その他</h3>
+            <div class="mb-5">
+                <h3>フィルター機能</h3>
+                <p>マスタッシュ記号で表示する前に値を編集できる</p>
+                <div class="form-group">
+                    <input v-model="text2" type="text" class="form-control" placeholder="ここに入力したテキストを下に大文字で表示">
+                </div>
+                <p>{{ text2 | UpperCase }}</p>
+            </div>
+            <div class="mb-5">
+                <h3>computedプロパティ</h3>
+                <p>マスタッシュ記号で表示する前に値を編集できる</p>
+                <button type="button" v-on:click="num1++" v-bind:class="btn_class">A : {{ num1 }}</button>
+                <button type="button" v-on:click="num2++" v-bind:class="btn_class">{{ num2 }}</button>
+                <p>{{ addtoA() }}</p>
+                <p>{{ addtoB() }}</p>
             </div>
         </div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         var app = new Vue({
             el: "#app",
             data: {
-                btn_class: "btn btn-primary",
+                btn_class: "btn btn-success",
                 now: "00:00:00",
                 radio: null,
                 prefs: [
@@ -66,20 +90,42 @@
                     { name: 'Kumamoto' },
                     { name: 'Miyazaki' },
                     { name: 'Kagoshima' }
-                ]
+                ],
+                text1: "",
+                text2: "",
+                num1: 0,
+                num2: 0,
+                total: 0
             },
             methods: {
                 time: function (e) {
+                    console.log('time');
                     var date = new Date();
                     this.now = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
                 },
                 radioTrue: function (e) {
+                    console.log('radioTrue');
                     this.radio = true
                 },
                 radioFalse: function (e) {
+                    console.log('radioFalse');
                     this.radio = false
+                },
+                addtoA: function () {
+                    console.log('addtoA');
+                    return this.num1 + this.total
+                },
+                addtoB: function () {
+                    console.log('addtoB');
+                    return this.num2 + this.total
                 }
             },
+            filters: {
+                UpperCase(value) {
+                    if (!value) return ''
+                    return value.toUpperCase()
+                }
+            }
         });
     </script>
 </body>
